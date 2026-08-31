@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A little something for every teacher">
+    <title>Teacher's Day</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=DM+Sans:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="progress-bar" role="progressbar" aria-valuenow="1" aria-valuemin="1" aria-valuemax="8" aria-label="Scene progress">
+        <div class="progress-bar-fill"></div>
+    </div>
+    <div class="scene-counter" aria-live="polite">1 / 8</div>
+
+    <main class="scene-container">
+        <section class="scene active" id="scene-1" aria-label="Scene 1">
+            <div class="scene-content">
+                <div class="book-wrapper" id="book-wrapper">
+                    <div class="book" id="book">
+                        <!-- Book Cover -->
+                        <div class="book-cover">
+                            <div class="cover-front" id="cover-front">
+                                <div class="cover-content">
+                                    <p class="cover-label">A little something</p>
+                                    <h1 class="cover-title">for every teacher</h1>
+                                    <div class="cover-divider"></div>
+                                    <button class="btn-open" id="btn-open" aria-label="Open the story">
+                                        <span class="btn-open-text">Open the story</span>
+                                        <span class="btn-open-arrow" aria-hidden="true">→</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="cover-back" id="cover-back">
+                                <div class="cover-inner"></div>
+                            </div>
+                        </div>
+
+                        <!-- Book Spine -->
+                        <div class="book-spine" id="book-spine">
+                            <div class="spine-decoration"></div>
+                        </div>
+
+                        <!-- Pages -->
+                        <div class="book-pages" id="book-pages">
+                            <div class="pages-stack" id="pages-stack">
+                                <div class="page page-left" id="page-left">
+                                    <div class="page-content">
+                                        <h2 class="page-heading">
+                                            Every journey begins<br>with a lesson...
+                                        </h2>
+                                        <p class="page-paragraph">
+                                            And behind so many of our journeys,<br>there was a teacher.
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="page page-right" id="page-right">
+                                    <div class="page-content"></div>
+                                </div>
+                            </div>
+                            <div class="pages-thickness" id="pages-thickness"></div>
+                        </div>
+
+                        <!-- Inner Light -->
+                        <div class="book-light" id="book-light"></div>
+
+                        <!-- Book Particles -->
+                        <div class="book-particles" id="book-particles" aria-hidden="true"></div>
+                    </div>
+
+                    <!-- Reflection/Shadow -->
+                    <div class="book-shadow" id="book-shadow"></div>
+                </div>
+
+                <!-- Continue button (appears after animation) -->
+                <button class="btn-next" id="btn-next-1" aria-label="Continue to next scene" hidden>
+                    <span class="btn-text">Continue</span>
+                    <span class="btn-arrow" aria-hidden="true">→</span>
+                </button>
+            </div>
+        </section>
+
+        <section class="scene" id="scene-2" aria-label="Scene 2" hidden>
+            <div class="scene-content">
+                <p class="scene-placeholder">Scene 2 coming next</p>
+                <button class="btn-next" id="btn-next-2" aria-label="Continue to next scene">
+                    <span class="btn-text">Continue</span>
+                    <span class="btn-arrow" aria-hidden="true">→</span>
+                </button>
+            </div>
+        </section>
+
+        <section class="scene" id="scene-3" aria-label="Scene 3" hidden>
+            <div class="scene-content">
+                <p class="scene-placeholder">Scene 3 coming next</p>
+                <button class="btn-next" id="btn-next-3" aria-label="Continue to next scene">
+                    <span class="btn-text">Continue</span>
+                    <span class="btn-arrow" aria-hidden="true">→</span>
+                </button>
+            </div>
+        </section>
+
+        <section class="scene" id="scene-4" aria-label="Scene 4" hidden>
+            <div class="scene-content">
+                <p class="scene-placeholder">Scene 4 coming next</p>
+                <button class="btn-next" id="btn-next-4" aria-label="Continue to next scene">
+                    <span class="btn-text">Continue</span>
+                    <span class="btn-arrow" aria-hidden="true">→</span>
+                </button>
+            </div>
+        </section>
+
+        <section class="scene" id="scene-5" aria-label="Scene 5" hidden>
+            <div class="scene-content">
+                <p class="scene-placeholder">Scene 5 coming next</p>
+                <button class="btn-next" id="btn-next-5" aria-label="Continue to next scene">
+                    <span class="btn-text">Continue</span>
+                    <span class="btn-arrow" aria-hidden="true">→</span>
+                </button>
+            </div>
+        </section>
+
+        <section class="scene" id="scene-6" aria-label="Scene 6" hidden>
+            <div class="scene-content">
+                <p class="scene-placeholder">Scene 6 coming next</p>
+                <button class="btn-next" id="btn-next-6" aria-label="Continue to next scene">
+                    <span class="btn-text">Continue</span>
+                    <span class="btn-arrow" aria-hidden="true">→</span>
+                </button>
+            </div>
+        </section>
+
+        <section class="scene" id="scene-7" aria-label="Scene 7" hidden>
+            <div class="scene-content">
+                <p class="scene-placeholder">Scene 7 coming next</p>
+                <button class="btn-next" id="btn-next-7" aria-label="Continue to next scene">
+                    <span class="btn-text">Continue</span>
+                    <span class="btn-arrow" aria-hidden="true">→</span>
+                </button>
+            </div>
+        </section>
+
+        <section class="scene" id="scene-8" aria-label="Scene 8" hidden>
+            <div class="scene-content">
+                <p class="scene-placeholder">Scene 8 coming next</p>
+            </div>
+        </section>
+    </main>
+
+    <div class="particles-container" aria-hidden="true"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
