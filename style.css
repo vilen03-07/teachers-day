@@ -1099,3 +1099,816 @@ body {
         font-size: 0.9375rem;
     }
 }
+
+/* ========================================
+   CLASSROOM — SCENE 2
+   ======================================== */
+
+:root {
+    --chalk-green: #2a5a3a;
+    --chalk-green-dark: #1e4030;
+    --chalk-white: #e8e4d8;
+    --chalk-gold: #d4b884;
+    --chalkboard-bg: #2c5530;
+    --chalkboard-dark: #1e3d22;
+    --chalkboard-frame: #6b4a2e;
+    --chalkboard-frame-light: #8b6a4e;
+    --wood-desk: #a07850;
+    --wood-desk-dark: #7a5a3a;
+    --wood-desk-light: #c49a6c;
+    --silhouette-color: rgba(45, 50, 40, 0.7);
+    --silhouette-student: rgba(55, 60, 50, 0.5);
+    --sunlight-color: rgba(255, 245, 200, 0.15);
+    --sunbeam-color: rgba(255, 248, 220, 0.08);
+    --wall-color: #f0e8d8;
+    --wall-dark: #e0d4c0;
+    --floor-color: #c8a878;
+    --floor-dark: #b09060;
+    --dust-color: rgba(201, 168, 108, 0.4);
+
+    --classroom-width: clamp(320px, 80vw, 720px);
+    --classroom-height: clamp(220px, 40vw, 380px);
+}
+
+/* Classroom Wrapper */
+.classroom-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: var(--classroom-width);
+    margin: 0 auto var(--space-lg);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.classroom-wrapper.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .classroom-wrapper {
+        transition: opacity 0.01ms, transform 0.01ms;
+    }
+}
+
+/* Window */
+.window {
+    position: absolute;
+    top: -20px;
+    right: 20px;
+    width: clamp(80px, 15vw, 130px);
+    height: clamp(100px, 18vw, 160px);
+    z-index: 3;
+}
+
+.window-frame {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(180deg, #c8e8ff 0%, #e8f4ff 40%, #b8d8f0 100%);
+    border: 4px solid var(--chalkboard-frame);
+    border-radius: 3px 3px 0 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 3px;
+    padding: 3px;
+    overflow: hidden;
+    box-shadow: inset 0 0 20px rgba(135, 206, 235, 0.3);
+}
+
+.window-pane {
+    background: linear-gradient(135deg, rgba(200, 232, 255, 0.6) 0%, rgba(135, 206, 235, 0.4) 100%);
+    border: 1px solid rgba(107, 74, 46, 0.3);
+    border-radius: 1px;
+}
+
+.sunlight {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 200%;
+    height: 400%;
+    background: radial-gradient(ellipse at top left, var(--sunlight-color) 0%, transparent 60%);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 1.2s ease;
+}
+
+.window.visible .sunlight {
+    opacity: 1;
+}
+
+/* Sunbeams */
+.sunbeams {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 300%;
+    height: 500%;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 1.5s ease 0.3s;
+}
+
+.window.visible .sunbeams {
+    opacity: 1;
+}
+
+.sunbeam {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 60px;
+    height: 100%;
+    background: linear-gradient(180deg, var(--sunbeam-color) 0%, transparent 80%);
+    transform-origin: top left;
+    opacity: 0.6;
+}
+
+.sunbeam:nth-child(1) { transform: rotate(25deg); left: 10px; width: 50px; }
+.sunbeam:nth-child(2) { transform: rotate(35deg); left: 40px; width: 70px; opacity: 0.4; }
+.sunbeam:nth-child(3) { transform: rotate(30deg); left: 80px; width: 55px; opacity: 0.5; }
+.sunbeam:nth-child(4) { transform: rotate(40deg); left: 120px; width: 45px; opacity: 0.3; }
+.sunbeam:nth-child(5) { transform: rotate(28deg); left: 160px; width: 65px; opacity: 0.35; }
+
+/* Classroom Interior */
+.classroom-interior {
+    position: relative;
+    width: 100%;
+    height: var(--classroom-height);
+    background: linear-gradient(180deg, var(--wall-color) 0%, var(--wall-dark) 65%, var(--floor-color) 65%, var(--floor-dark) 100%);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: var(--shadow-medium), inset 0 0 60px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(201, 168, 108, 0.15);
+}
+
+/* Chalkboard */
+.chalkboard {
+    position: absolute;
+    top: 8%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 65%;
+    max-width: 400px;
+    z-index: 5;
+    opacity: 0;
+    transform: translateX(-50%) scale(0.95);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.chalkboard.visible {
+    opacity: 1;
+    transform: translateX(-50%) scale(1);
+}
+
+.chalkboard-frame {
+    position: absolute;
+    inset: -8px;
+    background: linear-gradient(145deg, var(--chalkboard-frame-light) 0%, var(--chalkboard-frame) 50%, #5a3a1e 100%);
+    border-radius: 4px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.chalkboard-surface {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: linear-gradient(145deg, var(--chalkboard-bg) 0%, var(--chalkboard-dark) 100%);
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12% 8%;
+    box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+}
+
+.chalkboard-surface::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+        repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255, 255, 255, 0.01) 2px, rgba(255, 255, 255, 0.01) 4px),
+        repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(255, 255, 255, 0.008) 2px, rgba(255, 255, 255, 0.008) 4px);
+    pointer-events: none;
+}
+
+/* Chalk Writing */
+.chalk-writing {
+    text-align: center;
+    position: relative;
+    z-index: 2;
+}
+
+.chalk-line {
+    overflow: hidden;
+}
+
+.chalk-text {
+    font-family: var(--font-handwritten);
+    color: var(--chalk-white);
+    text-shadow: 0 0 4px rgba(232, 228, 216, 0.3), 0 0 8px rgba(232, 228, 216, 0.1);
+    letter-spacing: 0.02em;
+    display: inline-block;
+}
+
+.chalk-title .chalk-text {
+    font-size: clamp(1rem, 2.5vw, 1.6rem);
+    font-weight: 700;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 1s ease-in-out;
+}
+
+.chalkboard.writing .chalk-title .chalk-text {
+    clip-path: inset(0 0% 0 0);
+}
+
+.chalk-divider {
+    width: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--chalk-white), transparent);
+    margin: 6px auto;
+    opacity: 0.5;
+    transition: width 0.6s ease;
+    transition-delay: 0.1s;
+}
+
+.chalkboard.writing .chalk-divider {
+    width: 80%;
+}
+
+.chalk-lesson .chalk-text {
+    font-size: clamp(0.85rem, 2vw, 1.3rem);
+    font-weight: 400;
+    font-style: italic;
+    color: var(--chalk-gold);
+    text-shadow: 0 0 4px rgba(212, 184, 132, 0.3);
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 1.2s ease-in-out;
+    transition-delay: 0.4s;
+}
+
+.chalkboard.writing .chalk-lesson .chalk-text {
+    clip-path: inset(0 0% 0 0);
+}
+
+/* Chalk Dust */
+.chalk-dust {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 20%;
+    pointer-events: none;
+}
+
+.dust-particle {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: var(--chalk-white);
+    border-radius: 50%;
+    opacity: 0;
+}
+
+.dust-particle.active {
+    animation: dust-fall 1.5s ease-out forwards;
+}
+
+@keyframes dust-fall {
+    0% { transform: translateY(0) scale(1); opacity: 0.5; }
+    100% { transform: translateY(20px) scale(0.3); opacity: 0; }
+}
+
+/* Chalk Ledge */
+.chalk-ledge {
+    position: absolute;
+    bottom: -12px;
+    left: 5%;
+    right: 5%;
+    height: 8px;
+    background: linear-gradient(180deg, var(--chalkboard-frame-light), var(--chalkboard-frame));
+    border-radius: 0 0 2px 2px;
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+    gap: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.chalk-piece {
+    width: 20px;
+    height: 5px;
+    background: var(--chalk-white);
+    border-radius: 2px;
+    opacity: 0.8;
+}
+
+.chalk-piece:nth-child(2) {
+    background: var(--chalk-gold);
+    width: 16px;
+}
+
+.eraser {
+    width: 24px;
+    height: 6px;
+    background: linear-gradient(180deg, #8b4a4a, #6b3a3a);
+    border-radius: 1px;
+    margin-left: auto;
+}
+
+/* Teacher Silhouette */
+.teacher-silhouette {
+    position: absolute;
+    bottom: 38%;
+    left: 12%;
+    width: clamp(35px, 6vw, 55px);
+    height: clamp(55px, 10vw, 85px);
+    z-index: 4;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+    transition-delay: 0.2s;
+}
+
+.teacher-silhouette.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.silhouette-body {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 70%;
+    height: 85%;
+    background: var(--silhouette-color);
+    border-radius: 30% 30% 10% 10%;
+    clip-path: polygon(20% 0%, 80% 0%, 85% 100%, 15% 100%);
+}
+
+.silhouette-body::before {
+    content: '';
+    position: absolute;
+    top: -35%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 40px;
+    background: var(--silhouette-color);
+    border-radius: 50%;
+}
+
+.silhouette-arm {
+    position: absolute;
+    bottom: 30%;
+    right: -15%;
+    width: 35%;
+    height: 8px;
+    background: var(--silhouette-color);
+    border-radius: 4px;
+    transform: rotate(-25deg);
+    transform-origin: left center;
+}
+
+/* Student Silhouettes */
+.students-silhouettes {
+    position: absolute;
+    bottom: 30%;
+    left: 0;
+    right: 0;
+    z-index: 3;
+    opacity: 0;
+    transition: opacity 1s ease;
+    transition-delay: 0.4s;
+}
+
+.students-silhouettes.visible {
+    opacity: 1;
+}
+
+.student {
+    position: absolute;
+    bottom: 0;
+    background: var(--silhouette-student);
+    border-radius: 25% 25% 5% 5%;
+}
+
+.student::before {
+    content: '';
+    position: absolute;
+    top: -55%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 65%;
+    aspect-ratio: 1;
+    background: var(--silhouette-student);
+    border-radius: 50%;
+}
+
+.student-1 { left: 25%; width: 28px; height: 35px; }
+.student-2 { left: 42%; width: 25px; height: 32px; }
+.student-3 { left: 58%; width: 26px; height: 33px; }
+.student-4 { left: 75%; width: 24px; height: 30px; }
+
+@media (min-width: 769px) {
+    .student-1 { width: 32px; height: 40px; }
+    .student-2 { width: 28px; height: 36px; }
+    .student-3 { width: 30px; height: 38px; }
+    .student-4 { width: 27px; height: 34px; }
+}
+
+/* Desks */
+.desks {
+    position: absolute;
+    bottom: 5%;
+    left: 0;
+    right: 0;
+    z-index: 2;
+    opacity: 0;
+    transition: opacity 0.6s ease;
+    transition-delay: 0.1s;
+}
+
+.desks.visible {
+    opacity: 1;
+}
+
+.desk-row {
+    display: flex;
+    justify-content: center;
+    gap: clamp(12px, 3vw, 28px);
+    margin-bottom: 8px;
+}
+
+.desk {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.desk-top {
+    width: clamp(55px, 12vw, 85px);
+    height: 8px;
+    background: linear-gradient(180deg, var(--wood-desk-light) 0%, var(--wood-desk) 50%, var(--wood-desk-dark) 100%);
+    border-radius: 2px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.desk-leg {
+    width: 4px;
+    height: 16px;
+    background: var(--wood-desk-dark);
+    border-radius: 0 0 1px 1px;
+}
+
+.desk-row:first-child .desk-leg {
+    height: 20px;
+}
+
+.desk > .desk-leg:first-of-type {
+    margin-left: -20px;
+}
+
+.desk > .desk-leg:last-of-type {
+    margin-right: -20px;
+}
+
+/* Classroom Details */
+.classroom-details {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.plant {
+    position: absolute;
+    bottom: 40%;
+    width: 14px;
+    height: 22px;
+    background: radial-gradient(ellipse at center top, #5a8a4a 0%, #3a6a2a 100%);
+    border-radius: 50% 50% 10% 10%;
+}
+
+.plant::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 10px;
+    height: 6px;
+    background: var(--chalkboard-frame);
+    border-radius: 0 0 3px 3px;
+}
+
+.plant-1 { left: 6%; }
+.plant-2 { right: 6%; bottom: 42%; transform: scale(0.8); }
+
+.bookshelf {
+    position: absolute;
+    bottom: 40%;
+    right: 14%;
+    width: 22px;
+    height: 30px;
+    background: linear-gradient(180deg,
+        #8b6a4e 0%, #8b6a4e 3px,
+        #c49a6c 3px, #c49a6c 5px,
+        #8b6a4e 5px, #8b6a4e 8px,
+        #c49a6c 8px, #c49a6c 10px,
+        #8b6a4e 10px, #8b6a4e 13px,
+        #c49a6c 13px, #c49a6c 15px,
+        #8b6a4e 15px, #8b6a4e 18px
+    );
+    border-radius: 2px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.wall-clock {
+    position: absolute;
+    top: 8%;
+    left: 8%;
+    width: 22px;
+    height: 22px;
+    background: var(--chalk-white);
+    border-radius: 50%;
+    border: 2px solid var(--chalkboard-frame);
+}
+
+.wall-clock::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 1px;
+    height: 6px;
+    background: var(--chalkboard-dark);
+    transform: translate(-50%, -100%) rotate(30deg);
+    transform-origin: bottom center;
+}
+
+.wall-clock::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 1px;
+    height: 4px;
+    background: var(--chalkboard-dark);
+    transform: translate(-50%, -100%) rotate(-60deg);
+    transform-origin: bottom center;
+}
+
+/* Dust Particles in Sunlight */
+.dust-particles {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 6;
+}
+
+.sun-dust {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    background: var(--dust-color);
+    border-radius: 50%;
+    opacity: 0;
+}
+
+.sun-dust.active {
+    animation: dust-float var(--dust-duration, 6s) ease-in-out infinite;
+    animation-delay: var(--dust-delay, 0s);
+}
+
+@keyframes dust-float {
+    0%, 100% {
+        transform: translate(0, 0);
+        opacity: 0;
+    }
+    20% {
+        opacity: 0.4;
+    }
+    50% {
+        transform: translate(var(--dust-tx, 10px), var(--dust-ty, -15px));
+        opacity: 0.6;
+    }
+    80% {
+        opacity: 0.3;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .sun-dust.active {
+        animation: none;
+        opacity: 0.2;
+    }
+    .dust-particle.active {
+        animation: none;
+        display: none;
+    }
+    .classroom-wrapper,
+    .chalkboard,
+    .teacher-silhouette,
+    .students-silhouettes,
+    .desks,
+    .text-main,
+    .lesson-line,
+    .text-reflection,
+    #btn-next-2 {
+        transition: opacity 0.01ms, transform 0.01ms;
+    }
+    .chalk-title .chalk-text,
+    .chalk-lesson .chalk-text {
+        transition: none;
+    }
+    .chalkboard.writing .chalk-title .chalk-text,
+    .chalkboard.writing .chalk-lesson .chalk-text {
+        clip-path: inset(0 0% 0 0);
+    }
+    .chalkboard.writing .chalk-divider {
+        width: 80%;
+    }
+}
+
+/* ========================================
+   CLASSROOM TEXT — SCENE 2
+   ======================================== */
+
+.classroom-text {
+    text-align: center;
+    max-width: 36rem;
+    margin: 0 auto;
+}
+
+.text-main {
+    font-family: var(--font-heading);
+    font-size: clamp(1.25rem, 2vw, 1.75rem);
+    font-weight: 500;
+    line-height: 1.5;
+    color: var(--color-deep-green);
+    margin-bottom: var(--space-lg);
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.text-main.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.text-main br {
+    display: block;
+    content: "";
+    margin-bottom: 0.15em;
+}
+
+.text-lessons {
+    margin-bottom: var(--space-lg);
+}
+
+.lesson-line {
+    font-family: var(--font-handwritten);
+    font-size: clamp(1.1rem, 1.8vw, 1.5rem);
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+    margin-bottom: var(--space-sm);
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.lesson-line.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.text-reflection {
+    font-family: var(--font-body);
+    font-size: clamp(0.95rem, 1.2vw, 1.15rem);
+    font-weight: 400;
+    line-height: 1.8;
+    color: var(--color-text-muted);
+    max-width: 30rem;
+    margin: 0 auto;
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.text-reflection.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.text-reflection br {
+    display: block;
+    content: "";
+    margin-bottom: 0.15em;
+}
+
+/* Scene 2 Continue Button */
+#btn-next-2 {
+    margin-top: var(--space-lg);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+#btn-next-2.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ========================================
+   CLASSROOM RESPONSIVE
+   ======================================== */
+
+@media (max-width: 768px) {
+    :root {
+        --classroom-width: 90vw;
+        --classroom-height: 200px;
+    }
+
+    .window {
+        width: 60px;
+        height: 80px;
+        right: 10px;
+        top: -10px;
+    }
+
+    .chalkboard {
+        width: 70%;
+    }
+
+    .plant,
+    .bookshelf,
+    .wall-clock {
+        display: none;
+    }
+
+    .student-2,
+    .student-4 {
+        display: none;
+    }
+}
+
+@media (max-width: 480px) {
+    :root {
+        --classroom-height: 180px;
+    }
+
+    .window {
+        width: 48px;
+        height: 64px;
+        right: 8px;
+    }
+
+    .chalk-ledge {
+        display: none;
+    }
+
+    .teacher-silhouette {
+        left: 8%;
+        width: 30px;
+        height: 45px;
+    }
+
+    .student {
+        transform: scale(0.8);
+    }
+
+    .desk-top {
+        width: 48px;
+    }
+
+    .classroom-text {
+        padding: 0 var(--space-sm);
+    }
+
+    .lesson-line {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 320px) {
+    :root {
+        --classroom-height: 160px;
+    }
+
+    .window {
+        display: none;
+    }
+
+    .student-3 {
+        display: none;
+    }
+}

@@ -28,6 +28,24 @@
     const BOOK_CONTINUE_DELAY = 1400;
     const BOOK_PARTICLE_COUNT = 12;
 
+    // Scene 2 — Classroom Timing
+    const CLASSROOM_DUST_COUNT = 15;
+    const CHALK_DUST_COUNT = 8;
+    const CLASSROOM_SEQUENCE = {
+        classroomDelay: 200,
+        windowDelay: 300,
+        desksDelay: 400,
+        teacherDelay: 500,
+        studentsDelay: 700,
+        chalkboardDelay: 600,
+        chalkWriteDelay: 1200,
+        textMainDelay: 2400,
+        lessonStartDelay: 3200,
+        lessonInterval: 450,
+        reflectionDelay: 6000,
+        continueDelay: 7000
+    };
+
     // ========================================
     // STATE
     // ========================================
@@ -37,6 +55,7 @@
     let particles = [];
     let prefersReducedMotion = false;
     let bookOpened = false;
+    let scene2Animated = false;
 
     // ========================================
     // DOM ELEMENTS
@@ -53,6 +72,21 @@
     const btnNext1 = document.getElementById('btn-next-1');
     const bookParticlesContainer = document.getElementById('book-particles');
 
+    // Scene 2 — Classroom Elements
+    const classroomWrapper = document.getElementById('classroom-wrapper');
+    const chalkboard = document.getElementById('chalkboard');
+    const teacherSilhouette = document.getElementById('teacher-silhouette');
+    const studentsSilhouettes = document.getElementById('students-silhouettes');
+    const desks = document.getElementById('desks');
+    const dustParticlesContainer = document.getElementById('dust-particles');
+    const chalkDust = document.getElementById('chalk-dust');
+    const windowEl = document.getElementById('window');
+    const classroomText = document.getElementById('classroom-text');
+    const textMain = document.getElementById('text-main');
+    const textLessons = document.getElementById('text-lessons');
+    const textReflection = document.getElementById('text-reflection');
+    const btnNext2 = document.getElementById('btn-next-2');
+
     // ========================================
     // INITIALIZATION
     // ========================================
@@ -66,6 +100,7 @@
         updateCounter();
         setInitialScene();
         initBook();
+        initClassroom();
     }
 
     function cacheElements() {
@@ -229,6 +264,125 @@
     }
 
     // ========================================
+    // CLASSROOM — SCENE 2
+    // ========================================
+
+    function initClassroom() {
+        if (btnNext2) {
+            btnNext2.addEventListener('click', handleNextClick);
+            btnNext2.addEventListener('keydown', handleNextKeydown);
+        }
+    }
+
+    function animateClassroom() {
+        if (scene2Animated) return;
+        scene2Animated = true;
+
+        const s = CLASSROOM_SEQUENCE;
+
+        // Classroom fades in
+        setTimeout(() => classroomWrapper.classList.add('visible'), s.classroomDelay);
+
+        // Window + sunlight
+        setTimeout(() => windowEl.classList.add('visible'), s.windowDelay);
+
+        // Desks fade in
+        setTimeout(() => desks.classList.add('visible'), s.desksDelay);
+
+        // Teacher silhouette appears
+        setTimeout(() => teacherSilhouette.classList.add('visible'), s.teacherDelay);
+
+        // Students appear
+        setTimeout(() => studentsSilhouettes.classList.add('visible'), s.studentsDelay);
+
+        // Chalkboard draws in
+        setTimeout(() => chalkboard.classList.add('visible'), s.chalkboardDelay);
+
+        // Chalk writing animation
+        setTimeout(() => startChalkWriting(), s.chalkWriteDelay);
+
+        // Main emotional text
+        setTimeout(() => textMain.classList.add('visible'), s.textMainDelay);
+
+        // Lessons reveal one by one
+        const lessonLines = textLessons.querySelectorAll('.lesson-line');
+        lessonLines.forEach((line, index) => {
+            setTimeout(() => line.classList.add('visible'), s.lessonStartDelay + index * s.lessonInterval);
+        });
+
+        // Reflection text
+        setTimeout(() => textReflection.classList.add('visible'), s.reflectionDelay);
+
+        // Continue button appears
+        setTimeout(() => {
+            if (btnNext2) {
+                btnNext2.hidden = false;
+                btnNext2.offsetHeight;
+                btnNext2.classList.add('visible');
+            }
+        }, s.continueDelay);
+
+        // Sun dust particles
+        setTimeout(() => createSunDust(), s.windowDelay + 200);
+    }
+
+    function startChalkWriting() {
+        chalkboard.classList.add('writing');
+        setTimeout(() => createChalkDust(1), 500);
+        setTimeout(() => createChalkDust(2), 1600);
+    }
+
+    function createChalkDust(batch) {
+        if (prefersReducedMotion || !chalkDust) return;
+
+        const offset = batch === 1 ? 0 : CHALK_DUST_COUNT;
+        for (let i = 0; i < CHALK_DUST_COUNT; i++) {
+            const dust = document.createElement('div');
+            dust.className = 'dust-particle';
+
+            dust.style.left = random(10, 90) + '%';
+            dust.style.bottom = random(0, 30) + 'px';
+            dust.style.animationDelay = random(0, 300) + 'ms';
+
+            chalkDust.appendChild(dust);
+
+            requestAnimationFrame(() => dust.classList.add('active'));
+
+            setTimeout(() => dust.remove(), 1800 + random(0, 500));
+        }
+    }
+
+    function createSunDust() {
+        if (prefersReducedMotion || !dustParticlesContainer) return;
+
+        for (let i = 0; i < CLASSROOM_DUST_COUNT; i++) {
+            const dust = document.createElement('div');
+            dust.className = 'sun-dust';
+
+            const duration = random(4000, 8000);
+            const delay = random(0, 4000);
+            const size = random(2, 4);
+            const tx = random(-30, 30);
+            const ty = random(-40, -10);
+
+            dust.style.cssText = `
+                width: ${size}px;
+                height: ${size}px;
+                left: ${random(20, 60)}%;
+                top: ${random(15, 50)}%;
+                --dust-duration: ${duration}ms;
+                --dust-delay: ${delay}ms;
+                --dust-tx: ${tx}px;
+                --dust-ty: ${ty}px;
+            `;
+
+            dustParticlesContainer.appendChild(dust);
+
+            requestAnimationFrame(() => dust.classList.add('active'));
+        }
+    }
+
+    // ========================================
     // PARTICLES SYSTEM (Background)
     // ========================================
 
@@ -295,6 +449,12 @@
         // Animate out current
         currentSceneEl.classList.remove('active');
 
+        // Trigger scene-specific animations
+        if (sceneNumber === 2) {
+            // Small delay to allow scene to render, then animate classroom
+            setTimeout(() => animateClassroom(), 100);
+        }
+
         // Update state after transition
         setTimeout(() => {
             currentSceneEl.hidden = true;
@@ -332,8 +492,8 @@
     // ========================================
 
     function bindEvents() {
-        // Next buttons (Scene 2-7)
-        for (let i = 2; i <= TOTAL_SCENES - 1; i++) {
+        // Next buttons (Scene 3-7) — Scene 2 handled by initClassroom
+        for (let i = 3; i <= TOTAL_SCENES - 1; i++) {
             const btn = document.getElementById(`btn-next-${i}`);
             if (btn) {
                 btn.addEventListener('click', handleNextClick);

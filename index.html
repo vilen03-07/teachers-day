@@ -85,8 +85,109 @@
 
         <section class="scene" id="scene-2" aria-label="Scene 2" hidden>
             <div class="scene-content">
-                <p class="scene-placeholder">Scene 2 coming next</p>
-                <button class="btn-next" id="btn-next-2" aria-label="Continue to next scene">
+                <div class="classroom-wrapper" id="classroom-wrapper">
+                    <!-- Window with sunlight -->
+                    <div class="window" id="window">
+                        <div class="window-frame">
+                            <div class="window-pane"></div>
+                            <div class="window-pane"></div>
+                            <div class="window-pane"></div>
+                            <div class="window-pane"></div>
+                        </div>
+                        <div class="sunlight" id="sunlight"></div>
+                        <div class="sunbeams" id="sunbeams">
+                            <div class="sunbeam"></div>
+                            <div class="sunbeam"></div>
+                            <div class="sunbeam"></div>
+                            <div class="sunbeam"></div>
+                            <div class="sunbeam"></div>
+                        </div>
+                    </div>
+
+                    <!-- Classroom interior -->
+                    <div class="classroom-interior">
+                        <!-- Chalkboard -->
+                        <div class="chalkboard" id="chalkboard">
+                            <div class="chalkboard-frame"></div>
+                            <div class="chalkboard-surface">
+                                <div class="chalk-writing" id="chalk-writing">
+                                    <div class="chalk-line chalk-title" id="chalk-title">
+                                        <span class="chalk-text">Today's Lesson</span>
+                                    </div>
+                                    <div class="chalk-divider" id="chalk-divider"></div>
+                                    <div class="chalk-line chalk-lesson" id="chalk-lesson">
+                                        <span class="chalk-text">Believe in yourself.</span>
+                                    </div>
+                                </div>
+                                <div class="chalk-dust" id="chalk-dust" aria-hidden="true"></div>
+                            </div>
+                            <div class="chalk-ledge">
+                                <div class="chalk-piece"></div>
+                                <div class="chalk-piece"></div>
+                                <div class="eraser"></div>
+                            </div>
+                        </div>
+
+                        <!-- Teacher silhouette -->
+                        <div class="teacher-silhouette" id="teacher-silhouette" aria-hidden="true">
+                            <div class="silhouette-body"></div>
+                            <div class="silhouette-arm"></div>
+                        </div>
+
+                        <!-- Student silhouettes -->
+                        <div class="students-silhouettes" id="students-silhouettes" aria-hidden="true">
+                            <div class="student student-1"></div>
+                            <div class="student student-2"></div>
+                            <div class="student student-3"></div>
+                            <div class="student student-4"></div>
+                        </div>
+
+                        <!-- Desks -->
+                        <div class="desks" id="desks">
+                            <div class="desk-row">
+                                <div class="desk"><div class="desk-top"></div><div class="desk-leg"></div><div class="desk-leg"></div></div>
+                                <div class="desk"><div class="desk-top"></div><div class="desk-leg"></div><div class="desk-leg"></div></div>
+                                <div class="desk"><div class="desk-top"></div><div class="desk-leg"></div><div class="desk-leg"></div></div>
+                            </div>
+                            <div class="desk-row">
+                                <div class="desk"><div class="desk-top"></div><div class="desk-leg"></div><div class="desk-leg"></div></div>
+                                <div class="desk"><div class="desk-top"></div><div class="desk-leg"></div><div class="desk-leg"></div></div>
+                                <div class="desk"><div class="desk-top"></div><div class="desk-leg"></div><div class="desk-leg"></div></div>
+                            </div>
+                        </div>
+
+                        <!-- Classroom details -->
+                        <div class="classroom-details" aria-hidden="true">
+                            <div class="plant plant-1"></div>
+                            <div class="plant plant-2"></div>
+                            <div class="bookshelf"></div>
+                            <div class="wall-clock"></div>
+                        </div>
+                    </div>
+
+                    <!-- Floating dust particles in sunlight -->
+                    <div class="dust-particles" id="dust-particles" aria-hidden="true"></div>
+                </div>
+
+                <!-- Emotional text section -->
+                <div class="classroom-text" id="classroom-text">
+                    <p class="text-main" id="text-main">
+                        You taught us more<br>than what was written in a book.
+                    </p>
+                    <div class="text-lessons" id="text-lessons">
+                        <p class="lesson-line" id="lesson-1">To ask questions.</p>
+                        <p class="lesson-line" id="lesson-2">To try again when we failed.</p>
+                        <p class="lesson-line" id="lesson-3">To be curious.</p>
+                        <p class="lesson-line" id="lesson-4">To be brave.</p>
+                        <p class="lesson-line" id="lesson-5">To keep learning.</p>
+                    </div>
+                    <p class="text-reflection" id="text-reflection">
+                        Sometimes, you may not realize<br>how much a few words from you<br>meant to us.
+                    </p>
+                </div>
+
+                <!-- Continue button (appears after animation) -->
+                <button class="btn-next" id="btn-next-2" aria-label="Continue to next scene" hidden>
                     <span class="btn-text">Continue</span>
                     <span class="btn-arrow" aria-hidden="true">→</span>
                 </button>
