@@ -243,10 +243,99 @@
         </section>
 
         <section class="scene" id="scene-4" aria-label="Scene 4" hidden>
-            <div class="scene-content">
-                <p class="scene-placeholder">Scene 4 coming next</p>
-                <button class="btn-next" id="btn-next-4" aria-label="Continue to next scene">
-                    <span class="btn-text">Continue</span>
+            <div class="scene-content scene-4-content">
+                <!-- Primary statement -->
+                <p class="tree-primary" id="tree-primary">
+                    Teachers plant seeds<br>they may never see grow.
+                </p>
+
+                <!-- Tree visual -->
+                <div class="tree-stage" id="tree-stage">
+                    <div class="tree-glow" id="tree-glow" aria-hidden="true"></div>
+                    <svg class="tree-svg" viewBox="0 0 400 500" role="img" aria-label="A tree growing from a seed" focusable="false">
+                        <!-- Soil -->
+                        <ellipse class="tree-soil-depth" cx="200" cy="452" rx="150" ry="16" />
+                        <ellipse class="tree-soil" cx="200" cy="442" rx="175" ry="24" />
+
+                        <!-- Roots (beneath soil) -->
+                        <path class="tree-path tree-root root-l" pathLength="1" d="M200 438 C188 448 172 456 152 460" />
+                        <path class="tree-path tree-root root-r" pathLength="1" d="M200 438 C212 448 228 456 248 460" />
+                        <path class="tree-path tree-root root-l2" pathLength="1" d="M200 440 C194 452 180 462 164 466" />
+
+                        <!-- Seed -->
+                        <g class="tree-seed">
+                            <ellipse cx="200" cy="436" rx="8" ry="6" />
+                            <ellipse cx="198" cy="434" rx="3" ry="2" />
+                        </g>
+
+                        <!-- Trunk -->
+                        <path class="tree-path tree-trunk" pathLength="1" d="M200 432 C200 400 199 360 200 315" />
+
+                        <!-- Main branches -->
+                        <path class="tree-path tree-branch branch-l1" pathLength="1" d="M199 348 C182 330 164 312 146 296" />
+                        <path class="tree-path tree-branch branch-r1" pathLength="1" d="M201 340 C220 322 238 302 254 286" />
+
+                        <!-- Upper branches -->
+                        <path class="tree-path tree-branch branch-l2" pathLength="1" d="M200 318 C190 290 175 262 156 242" />
+                        <path class="tree-path tree-branch branch-r2" pathLength="1" d="M200 320 C212 294 228 266 246 242" />
+
+                        <!-- Small branches -->
+                        <path class="tree-path tree-branch branch-l3" pathLength="1" d="M171 306 C160 292 149 276 140 260" />
+                        <path class="tree-path tree-branch branch-r3" pathLength="1" d="M232 292 C245 276 256 258 262 240" />
+                        <path class="tree-path tree-branch branch-l4" pathLength="1" d="M190 262 C182 248 174 232 168 216" />
+                        <path class="tree-path tree-branch branch-r4" pathLength="1" d="M212 262 C220 248 228 232 234 216" />
+
+                        <!-- Trunk top -->
+                        <path class="tree-path tree-branch branch-tip" pathLength="1" d="M200 315 C200 290 200 262 200 232" />
+
+                        <!-- Leaves -->
+                        <g class="tree-foliage">
+                            <ellipse class="leaf" cx="146" cy="290" rx="13" ry="8" />
+                            <ellipse class="leaf" cx="132" cy="272" rx="11" ry="7" />
+                            <ellipse class="leaf" cx="254" cy="280" rx="13" ry="8" />
+                            <ellipse class="leaf" cx="268" cy="262" rx="11" ry="7" />
+                            <ellipse class="leaf" cx="156" cy="238" rx="13" ry="8" />
+                            <ellipse class="leaf" cx="138" cy="222" rx="11" ry="7" />
+                            <ellipse class="leaf" cx="246" cy="238" rx="13" ry="8" />
+                            <ellipse class="leaf" cx="262" cy="222" rx="11" ry="7" />
+                            <ellipse class="leaf" cx="168" cy="210" rx="11" ry="7" />
+                            <ellipse class="leaf" cx="234" cy="210" rx="11" ry="7" />
+                            <ellipse class="leaf" cx="200" cy="226" rx="14" ry="9" />
+                            <ellipse class="leaf" cx="200" cy="256" rx="12" ry="8" />
+                            <ellipse class="leaf" cx="184" cy="240" rx="10" ry="6" />
+                            <ellipse class="leaf" cx="216" cy="240" rx="10" ry="6" />
+                            <ellipse class="leaf" cx="210" cy="286" rx="11" ry="7" />
+                            <ellipse class="leaf" cx="192" cy="290" rx="11" ry="7" />
+                        </g>
+                    </svg>
+
+                    <!-- Subtle falling leaves (after growth) -->
+                    <div class="falling-leaf fall-1" aria-hidden="true"></div>
+                    <div class="falling-leaf fall-2" aria-hidden="true"></div>
+                    <div class="falling-leaf fall-3" aria-hidden="true"></div>
+                </div>
+
+                <!-- Growing statements -->
+                <div class="tree-growth-lines" id="tree-growth-lines">
+                    <p class="growth-line line-1" id="growth-line-1">Some seeds become knowledge.</p>
+                    <p class="growth-line line-2" id="growth-line-2">Some become confidence.</p>
+                    <p class="growth-line line-3" id="growth-line-3">Some become dreams.</p>
+                    <p class="growth-line line-4" id="growth-line-4">And some become the people<br>we grow into.</p>
+                </div>
+
+                <!-- Emotional section -->
+                <div class="tree-emotional" id="tree-emotional">
+                    <p class="emotional-lead" id="emotional-lead">
+                        You may never see every branch<br>of the tree you helped grow.
+                    </p>
+                    <p class="emotional-focus" id="emotional-focus">
+                        But it is growing. <span class="leaf-emoji" aria-hidden="true">🌱</span>
+                    </p>
+                </div>
+
+                <!-- Next button (appears after animation) -->
+                <button class="btn-next" id="btn-next-4" aria-label="Next scene" hidden>
+                    <span class="btn-text">Next</span>
                     <span class="btn-arrow" aria-hidden="true">→</span>
                 </button>
             </div>

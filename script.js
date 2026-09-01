@@ -57,6 +57,20 @@
         continueDelay: 6600
     };
 
+    // Scene 4 — Growing Tree Timing
+    const TREE_SEQUENCE = {
+        primaryDelay: 400,
+        growReadyDelay: 900,
+        line1Delay: 2800,
+        line2Delay: 3800,
+        line3Delay: 4800,
+        line4Delay: 5800,
+        grownDelay: 6300,
+        leadDelay: 7000,
+        focusDelay: 8300,
+        continueDelay: 9400
+    };
+
     // ========================================
     // STATE
     // ========================================
@@ -68,6 +82,7 @@
     let bookOpened = false;
     let scene2Animated = false;
     let scene3Animated = false;
+    let scene4Animated = false;
 
     // ========================================
     // DOM ELEMENTS
@@ -107,6 +122,17 @@
     const emotionalStatement = document.getElementById('emotional-statement');
     const btnNext3 = document.getElementById('btn-next-3');
 
+    // Scene 4 — Growing Tree Elements
+    const treePrimary = document.getElementById('tree-primary');
+    const treeStage = document.getElementById('tree-stage');
+    const growthLine1 = document.getElementById('growth-line-1');
+    const growthLine2 = document.getElementById('growth-line-2');
+    const growthLine3 = document.getElementById('growth-line-3');
+    const growthLine4 = document.getElementById('growth-line-4');
+    const emotionalLead = document.getElementById('emotional-lead');
+    const emotionalFocus = document.getElementById('emotional-focus');
+    const btnNext4 = document.getElementById('btn-next-4');
+
     // ========================================
     // INITIALIZATION
     // ========================================
@@ -122,6 +148,7 @@
         initBook();
         initClassroom();
         initMemoryCards();
+        initTree();
     }
 
     function cacheElements() {
@@ -449,6 +476,55 @@
     }
 
     // ========================================
+    // GROWING TREE — SCENE 4
+    // ========================================
+
+    function initTree() {
+        if (btnNext4) {
+            btnNext4.addEventListener('click', handleNextClick);
+            btnNext4.addEventListener('keydown', handleNextKeydown);
+        }
+    }
+
+    function animateTree() {
+        if (scene4Animated) return;
+        scene4Animated = true;
+
+        const t = TREE_SEQUENCE;
+
+        // Compress the timeline when reduced motion is enabled
+        const rt = (ms) => prefersReducedMotion ? Math.min(ms, 700) : ms;
+
+        // Primary statement fades in
+        setTimeout(() => treePrimary.classList.add('visible'), rt(t.primaryDelay));
+
+        // Tree growth begins (soil, seed, roots, trunk, branches, leaves via CSS)
+        setTimeout(() => treeStage.classList.add('growing'), rt(t.growReadyDelay));
+
+        // Growing statements reveal as the tree develops
+        setTimeout(() => growthLine1.classList.add('visible'), rt(t.line1Delay));
+        setTimeout(() => growthLine2.classList.add('visible'), rt(t.line2Delay));
+        setTimeout(() => growthLine3.classList.add('visible'), rt(t.line3Delay));
+        setTimeout(() => growthLine4.classList.add('visible'), rt(t.line4Delay));
+
+        // Tree becomes fully grown — sway + glow + falling leaves
+        setTimeout(() => treeStage.classList.add('grown'), rt(t.grownDelay));
+
+        // Emotional section
+        setTimeout(() => emotionalLead.classList.add('visible'), rt(t.leadDelay));
+        setTimeout(() => emotionalFocus.classList.add('visible'), rt(t.focusDelay));
+
+        // Next button appears
+        setTimeout(() => {
+            if (btnNext4) {
+                btnNext4.hidden = false;
+                btnNext4.offsetHeight;
+                btnNext4.classList.add('visible');
+            }
+        }, rt(t.continueDelay));
+    }
+
+    // ========================================
     // PARTICLES SYSTEM (Background)
     // ========================================
 
@@ -522,6 +598,9 @@
         } else if (sceneNumber === 3) {
             // Small delay to allow scene to render, then animate memory cards
             setTimeout(() => animateMemoryCards(), 100);
+        } else if (sceneNumber === 4) {
+            // Small delay to allow scene to render, then animate tree growth
+            setTimeout(() => animateTree(), 100);
         }
 
         // Update state after transition
@@ -561,8 +640,8 @@
     // ========================================
 
     function bindEvents() {
-        // Next buttons (Scene 4-7) — Scene 2 & 3 handled by their init functions
-        for (let i = 4; i <= TOTAL_SCENES - 1; i++) {
+        // Next buttons (Scene 5-7) — Scenes 2, 3, 4 handled by their init functions
+        for (let i = 5; i <= TOTAL_SCENES - 1; i++) {
             const btn = document.getElementById(`btn-next-${i}`);
             if (btn) {
                 btn.addEventListener('click', handleNextClick);

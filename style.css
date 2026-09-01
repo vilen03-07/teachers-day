@@ -2201,3 +2201,483 @@ body {
         font-size: 1.2rem;
     }
 }
+
+/* ========================================
+   GROWING TREE — SCENE 4
+   ======================================== */
+
+:root {
+    --tree-trunk: #6b4a2e;
+    --tree-trunk-dark: #5a3d24;
+    --tree-branch: #7c5a38;
+    --tree-root: #5e4428;
+    --tree-soil-a: #7a5a3a;
+    --tree-soil-b: #5e4428;
+    --tree-soil-top: #8a6a48;
+    --tree-seed: #8a6a3a;
+    --tree-leaf-a: #4a7a52;
+    --tree-leaf-b: #5a8a5e;
+    --tree-leaf-c: #6a9a68;
+    --tree-leaf-gold: #b8a05a;
+    --tree-glow-a: rgba(212, 184, 132, 0.22);
+    --tree-glow-b: rgba(212, 184, 132, 0);
+    --tree-stage-w: clamp(170px, 30vw, 330px);
+}
+
+.scene-4-content {
+    max-width: 50rem;
+}
+
+/* Primary statement */
+.tree-primary {
+    font-family: var(--font-heading);
+    font-size: clamp(1.4rem, 3vw, 2.2rem);
+    font-weight: 500;
+    line-height: 1.4;
+    color: var(--color-deep-green);
+    letter-spacing: -0.01em;
+    margin-bottom: var(--space-md);
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.tree-primary.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.tree-primary br {
+    display: block;
+    content: "";
+    margin-bottom: 0.1em;
+}
+
+/* Tree stage */
+.tree-stage {
+    position: relative;
+    width: var(--tree-stage-w);
+    height: calc(var(--tree-stage-w) * 1.25);
+    margin: 0 auto var(--space-md);
+    transform-origin: 50% 100%;
+}
+
+.tree-stage.grown {
+    animation: tree-sway 6s ease-in-out infinite;
+}
+
+@keyframes tree-sway {
+    0%, 100% { transform: rotate(0deg); }
+    50% { transform: rotate(0.5deg); }
+}
+
+/* Circular glow behind the tree */
+.tree-glow {
+    position: absolute;
+    top: 18%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 85%;
+    height: 72%;
+    background: radial-gradient(ellipse at center, var(--tree-glow-a) 0%, var(--tree-glow-b) 70%);
+    border-radius: 50%;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 1.4s ease;
+}
+
+.tree-stage.grown .tree-glow {
+    opacity: 1;
+}
+
+.tree-stage.grown .tree-glow {
+    animation: glow-breathe 7s ease-in-out infinite;
+}
+
+/* SVG */
+.tree-svg {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: block;
+    overflow: visible;
+}
+
+/* Soil */
+.tree-soil,
+.tree-soil-depth {
+    opacity: 0;
+    transition: opacity 0.6s ease;
+}
+
+.tree-stage.growing .tree-soil {
+    opacity: 1;
+    transition-delay: 0s;
+    fill: var(--tree-soil-top);
+}
+
+.tree-stage.growing .tree-soil-depth {
+    opacity: 1;
+    transition-delay: 0.15s;
+    fill: var(--tree-soil-b);
+}
+
+/* Seed */
+.tree-seed {
+    opacity: 0;
+    transform: translateY(-16px);
+    transition: opacity 0.5s ease, transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.tree-seed ellipse {
+    fill: var(--tree-seed);
+}
+
+.tree-seed ellipse:last-child {
+    fill: rgba(255, 255, 255, 0.35);
+}
+
+.tree-stage.growing .tree-seed {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 0.3s;
+}
+
+/* Growth paths (trunk, branches, roots, twigs) */
+.tree-path {
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+}
+
+.tree-trunk { stroke: var(--tree-trunk); stroke-width: 16; }
+.tree-root { stroke: var(--tree-root); stroke-width: 3; }
+.tree-branch { stroke: var(--tree-branch); }
+.branch-l1, .branch-r1 { stroke-width: 10; }
+.branch-l2, .branch-r2 { stroke-width: 8; }
+.branch-l3, .branch-r3, .branch-l4, .branch-r4 { stroke-width: 5; }
+.branch-tip { stroke-width: 6; }
+
+.tree-stage.growing .tree-path {
+    stroke-dashoffset: 0;
+}
+
+.tree-stage.growing .tree-trunk {
+    transition: stroke-dashoffset 1.5s ease-in-out;
+    transition-delay: 0.9s;
+}
+
+.tree-stage.growing .root-l {
+    transition: stroke-dashoffset 0.7s ease-out;
+    transition-delay: 0.7s;
+}
+.tree-stage.growing .root-r {
+    transition: stroke-dashoffset 0.7s ease-out;
+    transition-delay: 0.8s;
+}
+.tree-stage.growing .root-l2 {
+    transition: stroke-dashoffset 0.7s ease-out;
+    transition-delay: 0.9s;
+}
+
+.tree-stage.growing .branch-l1 {
+    transition: stroke-dashoffset 1.1s ease-out;
+    transition-delay: 1.7s;
+}
+.tree-stage.growing .branch-r1 {
+    transition: stroke-dashoffset 1.1s ease-out;
+    transition-delay: 1.9s;
+}
+.tree-stage.growing .branch-l2 {
+    transition: stroke-dashoffset 1s ease-out;
+    transition-delay: 2.2s;
+}
+.tree-stage.growing .branch-r2 {
+    transition: stroke-dashoffset 1s ease-out;
+    transition-delay: 2.4s;
+}
+.tree-stage.growing .branch-l3 {
+    transition: stroke-dashoffset 0.9s ease-out;
+    transition-delay: 2.6s;
+}
+.tree-stage.growing .branch-r3 {
+    transition: stroke-dashoffset 0.9s ease-out;
+    transition-delay: 2.8s;
+}
+.tree-stage.growing .branch-l4 {
+    transition: stroke-dashoffset 0.8s ease-out;
+    transition-delay: 3.1s;
+}
+.tree-stage.growing .branch-r4 {
+    transition: stroke-dashoffset 0.8s ease-out;
+    transition-delay: 3.3s;
+}
+.tree-stage.growing .branch-tip {
+    transition: stroke-dashoffset 0.9s ease-out;
+    transition-delay: 3s;
+}
+
+/* Leaves */
+.tree-foliage {
+    opacity: 1;
+}
+
+.leaf {
+    transform-box: fill-box;
+    transform-origin: center;
+    opacity: 0;
+    transform: scale(0.4) translateY(6px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.leaf:nth-of-type(1)  { fill: var(--tree-leaf-a); transition-delay: 2.4s; }
+.leaf:nth-of-type(2)  { fill: var(--tree-leaf-gold); transition-delay: 2.6s; }
+.leaf:nth-of-type(3)  { fill: var(--tree-leaf-b); transition-delay: 2.8s; }
+.leaf:nth-of-type(4)  { fill: var(--tree-leaf-c); transition-delay: 3.0s; }
+.leaf:nth-of-type(5)  { fill: var(--tree-leaf-a); transition-delay: 3.2s; }
+.leaf:nth-of-type(6)  { fill: var(--tree-leaf-c); transition-delay: 3.4s; }
+.leaf:nth-of-type(7)  { fill: var(--tree-leaf-b); transition-delay: 3.6s; }
+.leaf:nth-of-type(8)  { fill: var(--tree-leaf-gold); transition-delay: 3.8s; }
+.leaf:nth-of-type(9)  { fill: var(--tree-leaf-c); transition-delay: 4.0s; }
+.leaf:nth-of-type(10) { fill: var(--tree-leaf-a); transition-delay: 4.2s; }
+.leaf:nth-of-type(11) { fill: var(--tree-leaf-b); transition-delay: 4.4s; }
+.leaf:nth-of-type(12) { fill: var(--tree-leaf-c); transition-delay: 4.6s; }
+.leaf:nth-of-type(13) { fill: var(--tree-leaf-a); transition-delay: 4.4s; }
+.leaf:nth-of-type(14) { fill: var(--tree-leaf-gold); transition-delay: 4.6s; }
+.leaf:nth-of-type(15) { fill: var(--tree-leaf-b); transition-delay: 4.8s; }
+.leaf:nth-of-type(16) { fill: var(--tree-leaf-c); transition-delay: 5.0s; }
+
+.tree-stage.growing .leaf {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+}
+
+/* Falling leaves (after growth) */
+.falling-leaf {
+    position: absolute;
+    width: 7px;
+    height: 7px;
+    background: linear-gradient(135deg, var(--tree-leaf-c), var(--tree-leaf-gold));
+    border-radius: 60% 40% 55% 45%;
+    pointer-events: none;
+    opacity: 0;
+}
+
+.fall-1 { left: 18%; top: 24%; }
+.fall-2 { left: 62%; top: 30%; }
+.fall-3 { left: 42%; top: 20%; }
+
+.tree-stage.grown .falling-leaf {
+    opacity: 0.7;
+    animation: leaf-fall 9s ease-in-out infinite;
+}
+
+.tree-stage.grown .fall-1 { animation-delay: 0.5s; }
+.tree-stage.grown .fall-2 { animation-delay: 3.2s; }
+.tree-stage.grown .fall-3 { animation-delay: 6s; }
+
+@keyframes leaf-fall {
+    0% { transform: translate(0, 0) rotate(0deg); opacity: 0; }
+    8% { opacity: 0.7; }
+    100% { transform: translate(14px, 180px) rotate(120deg); opacity: 0; }
+}
+
+/* ========================================
+   TREE TEXT — SCENE 4
+   ======================================== */
+
+.tree-growth-lines {
+    margin-bottom: var(--space-lg);
+}
+
+.growth-line {
+    font-family: var(--font-handwritten);
+    font-size: clamp(1rem, 1.7vw, 1.3rem);
+    color: var(--color-text-secondary);
+    line-height: 1.5;
+    margin-bottom: var(--space-xs);
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.growth-line.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.growth-line br {
+    display: block;
+    content: "";
+    margin-bottom: 0.1em;
+}
+
+/* Emotional section */
+.tree-emotional {
+    max-width: 34rem;
+    margin: 0 auto;
+}
+
+.emotional-lead {
+    font-family: var(--font-body);
+    font-size: clamp(0.95rem, 1.4vw, 1.1rem);
+    color: var(--color-text-muted);
+    line-height: 1.8;
+    margin-bottom: var(--space-lg);
+    opacity: 0;
+    transform: translateY(14px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.emotional-lead.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.emotional-lead br {
+    display: block;
+    content: "";
+    margin-bottom: 0.1em;
+}
+
+.emotional-focus {
+    position: relative;
+    font-family: var(--font-heading);
+    font-size: clamp(1.7rem, 4.2vw, 2.9rem);
+    font-weight: 500;
+    line-height: 1.3;
+    color: var(--color-deep-green);
+    letter-spacing: -0.01em;
+    opacity: 0;
+    transform: translateY(18px) scale(0.98);
+    transition: opacity 0.9s ease, transform 0.9s ease;
+}
+
+.emotional-focus.visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+.emotional-focus::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 130%;
+    height: 150%;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(ellipse at center, var(--tree-glow-a) 0%, transparent 65%);
+    pointer-events: none;
+}
+
+em, .leaf-emoji {
+    font-style: normal;
+}
+
+.leaf-emoji {
+    display: inline-block;
+    font-size: 0.7em;
+    transform: translateY(2px);
+}
+
+/* Scene 4 Next button */
+#btn-next-4 {
+    margin-top: var(--space-xl);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+#btn-next-4.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ========================================
+   TREE REDUCED MOTION
+   ======================================== */
+
+@media (prefers-reduced-motion: reduce) {
+    .tree-primary,
+    .growth-line,
+    .emotional-lead,
+    .emotional-focus,
+    #btn-next-4,
+    .tree-soil,
+    .tree-soil-depth,
+    .tree-seed {
+        transition: opacity 0.01ms, transform 0.01ms;
+    }
+
+    .tree-stage.grown {
+        animation: none;
+    }
+
+    .tree-stage.grown .tree-glow {
+        animation: none;
+    }
+
+    .tree-stage .tree-path {
+        stroke-dashoffset: 0;
+    }
+
+    .tree-stage .leaf {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+
+    .tree-stage .tree-soil,
+    .tree-stage .tree-soil-depth,
+    .tree-stage .tree-seed {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .falling-leaf {
+        display: none;
+    }
+}
+
+/* ========================================
+   TREE RESPONSIVE
+   ======================================== */
+
+@media (max-width: 768px) {
+    :root {
+        --tree-stage-w: clamp(150px, 42vw, 260px);
+    }
+
+    .tree-primary {
+        margin-bottom: var(--space-sm);
+    }
+}
+
+@media (max-width: 480px) {
+    .tree-primary {
+        font-size: 1.3rem;
+    }
+
+    .tree-emotional {
+        margin-top: var(--space-sm);
+    }
+
+    .emotional-lead {
+        margin-bottom: var(--space-md);
+    }
+
+    #btn-next-4 {
+        margin-top: var(--space-lg);
+    }
+}
+
+@media (max-width: 320px) {
+    :root {
+        --tree-stage-w: 52vw;
+    }
+
+    .growth-line {
+        font-size: 0.9rem;
+    }
+}
