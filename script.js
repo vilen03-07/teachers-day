@@ -46,6 +46,17 @@
         continueDelay: 7000
     };
 
+    // Scene 3 — Memory Cards Timing
+    const MEMORY_SEQUENCE = {
+        titleDelay: 200,
+        subtitleDelay: 800,
+        cardBaseDelay: 1400,
+        cardInterval: 700,
+        transitionDelay: 4600,
+        statementDelay: 5800,
+        continueDelay: 6600
+    };
+
     // ========================================
     // STATE
     // ========================================
@@ -56,6 +67,7 @@
     let prefersReducedMotion = false;
     let bookOpened = false;
     let scene2Animated = false;
+    let scene3Animated = false;
 
     // ========================================
     // DOM ELEMENTS
@@ -87,6 +99,14 @@
     const textReflection = document.getElementById('text-reflection');
     const btnNext2 = document.getElementById('btn-next-2');
 
+    // Scene 3 — Memory Cards Elements
+    const memoryTitle = document.getElementById('memory-title');
+    const memorySubtitle = document.getElementById('memory-subtitle');
+    const memoryCards = document.getElementById('memory-cards');
+    const transitionLine = document.getElementById('transition-line');
+    const emotionalStatement = document.getElementById('emotional-statement');
+    const btnNext3 = document.getElementById('btn-next-3');
+
     // ========================================
     // INITIALIZATION
     // ========================================
@@ -101,6 +121,7 @@
         setInitialScene();
         initBook();
         initClassroom();
+        initMemoryCards();
     }
 
     function cacheElements() {
@@ -383,6 +404,51 @@
     }
 
     // ========================================
+    // MEMORY CARDS — SCENE 3
+    // ========================================
+
+    function initMemoryCards() {
+        if (btnNext3) {
+            btnNext3.addEventListener('click', handleNextClick);
+            btnNext3.addEventListener('keydown', handleNextKeydown);
+        }
+    }
+
+    function animateMemoryCards() {
+        if (scene3Animated) return;
+        scene3Animated = true;
+
+        const m = MEMORY_SEQUENCE;
+
+        // Title fades in
+        setTimeout(() => memoryTitle.classList.add('visible'), m.titleDelay);
+
+        // Subtitle appears
+        setTimeout(() => memorySubtitle.classList.add('visible'), m.subtitleDelay);
+
+        // Cards appear one by one
+        const cards = memoryCards.querySelectorAll('.memory-card');
+        cards.forEach((card, index) => {
+            setTimeout(() => card.classList.add('visible'), m.cardBaseDelay + index * m.cardInterval);
+        });
+
+        // Transition line appears after cards
+        setTimeout(() => transitionLine.classList.add('visible'), m.transitionDelay);
+
+        // Emotional statement appears
+        setTimeout(() => emotionalStatement.classList.add('visible'), m.statementDelay);
+
+        // Continue button appears
+        setTimeout(() => {
+            if (btnNext3) {
+                btnNext3.hidden = false;
+                btnNext3.offsetHeight;
+                btnNext3.classList.add('visible');
+            }
+        }, m.continueDelay);
+    }
+
+    // ========================================
     // PARTICLES SYSTEM (Background)
     // ========================================
 
@@ -453,6 +519,9 @@
         if (sceneNumber === 2) {
             // Small delay to allow scene to render, then animate classroom
             setTimeout(() => animateClassroom(), 100);
+        } else if (sceneNumber === 3) {
+            // Small delay to allow scene to render, then animate memory cards
+            setTimeout(() => animateMemoryCards(), 100);
         }
 
         // Update state after transition
@@ -492,8 +561,8 @@
     // ========================================
 
     function bindEvents() {
-        // Next buttons (Scene 3-7) — Scene 2 handled by initClassroom
-        for (let i = 3; i <= TOTAL_SCENES - 1; i++) {
+        // Next buttons (Scene 4-7) — Scene 2 & 3 handled by their init functions
+        for (let i = 4; i <= TOTAL_SCENES - 1; i++) {
             const btn = document.getElementById(`btn-next-${i}`);
             if (btn) {
                 btn.addEventListener('click', handleNextClick);

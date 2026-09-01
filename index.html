@@ -195,10 +195,48 @@
         </section>
 
         <section class="scene" id="scene-3" aria-label="Scene 3" hidden>
-            <div class="scene-content">
-                <p class="scene-placeholder">Scene 3 coming next</p>
-                <button class="btn-next" id="btn-next-3" aria-label="Continue to next scene">
-                    <span class="btn-text">Continue</span>
+            <div class="scene-content scene-3-content">
+                <!-- Title -->
+                <h2 class="memory-title" id="memory-title">Things you may never hear</h2>
+
+                <!-- Subtitle -->
+                <p class="memory-subtitle" id="memory-subtitle">
+                    Sometimes,<br>the smallest moments<br>mean the most.
+                </p>
+
+                <!-- Memory Cards -->
+                <div class="memory-cards" id="memory-cards">
+                    <article class="memory-card card-1">
+                        <p class="card-quote">"Well done."</p>
+                        <p class="card-text">Those two words may have given someone the confidence to keep going.</p>
+                    </article>
+                    <article class="memory-card card-2">
+                        <p class="card-quote">"Try again."</p>
+                        <p class="card-text">They may have taught someone that failure isn't the end.</p>
+                    </article>
+                    <article class="memory-card card-3">
+                        <p class="card-quote">"I believe in you."</p>
+                        <p class="card-text">Those words may have helped someone believe in themselves.</p>
+                    </article>
+                    <article class="memory-card card-4">
+                        <p class="card-quote">"It's okay to make mistakes."</p>
+                        <p class="card-text">They may have made learning feel safe.</p>
+                    </article>
+                </div>
+
+                <!-- Emotional Transition -->
+                <div class="memory-transition" id="memory-transition">
+                    <p class="transition-line" id="transition-line">You may remember a lesson.</p>
+                    <div class="emotional-statement" id="emotional-statement">
+                        <p class="emotional-title">
+                            We may remember<br>how you made us feel.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Continue button (appears after animation) -->
+                <button class="btn-next" id="btn-next-3" aria-label="Keep going to next scene" hidden>
+                    <span class="btn-text">Keep going</span>
                     <span class="btn-arrow" aria-hidden="true">→</span>
                 </button>
             </div>
